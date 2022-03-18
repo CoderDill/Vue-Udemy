@@ -29,6 +29,10 @@ const app = Vue.createApp({
       const playerDamage = getAttackValue(9, 20);
       this.playerHealth -= playerDamage;
     },
+    heal() {
+      const heal = getAttackValue(10, 25)
+      this.playerHealth += heal
+    },
     surrender() {
       this.monsterHealth = 100
       this.playerHealth = 100
