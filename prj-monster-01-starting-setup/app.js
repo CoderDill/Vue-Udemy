@@ -29,7 +29,11 @@ const app = Vue.createApp({
       const playerDamage = getAttackValue(9, 20);
       this.playerHealth -= playerDamage;
     },
-    surrender() {},
+    surrender() {
+      this.monsterHealth = 100
+      this.playerHealth = 100
+      this.battleLog = []
+    },
   },
 });
 
