@@ -10,7 +10,15 @@ const app = Vue.createApp({
       battleLog: [],
       gameOver: false,
     };
-  },
+    },
+    computed: {
+        monsterBarStyles() {
+            return { width: this.monsterHealth + "%" };
+        },
+        playerBarStyles() {
+            return { width: this.playerHealth + "%" };
+        }
+     },
   methods: {
     attackMonster() {
       const monsterDamage = getAttackValue(5, 15);
