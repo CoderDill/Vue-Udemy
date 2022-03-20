@@ -1,11 +1,16 @@
 <template>
   <section>
     <header>
-          <h2>My Friends</h2>
+      <h1>My Friends</h1>
     </header>
     <ul>
-      <friend-contact></friend-contact>
-      <friend-contact></friend-contact>
+      <friend-contact
+        v-for="friend in friends"
+        :key="friend.id"
+        :name="friend.name"
+        :phone-number="friend.phone"
+        :email-address="friend.email"
+      ></friend-contact>
     </ul>
   </section>
 </template>
