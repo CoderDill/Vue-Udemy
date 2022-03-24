@@ -11,7 +11,7 @@
 export default {
   data() {
     return {
-      friends: [
+      friends: [1
         {
           id: "manuel",
           name: "Manuel Lorenz",
