@@ -1,10 +1,9 @@
 <template>
   <TheHeader title="Stored Resources" />
-  <StoredResources :resources="storedResources" />
+  
 </template>
 
 <script>
-import StoredResources from './components/learning-resouces/StoredResources.vue';
 import { ref } from 'vue';
 import TheHeader from './components/layouts/TheHeader.vue';
 
@@ -30,6 +29,7 @@ export default {
   components: {
     StoredResources,
     TheHeader,
+  
   },
 };
 </script>
