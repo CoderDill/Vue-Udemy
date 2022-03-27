@@ -1,9 +1,11 @@
 <template>
-  <base-card>
+  <base-card class="base-card">
     <base-button @click="setSelectedTab('stored-resources')"
+        :mode="storedResBtnMode"
       >Resources</base-button
     >
     <base-button @click="setSelectedTab('add-resource')"
+        :mode="addResBtnMode"
       >Add Resource</base-button
     >
   </base-card>
@@ -32,6 +34,8 @@ const storedResources = ref([
         link: 'https://google.com',
       },
     ]);
+
+
 export default {
   setup() {
     return { selectedTab, storedResources };
@@ -41,6 +45,14 @@ export default {
       resources: storedResources.value
     }
   },
+  computed: {
+    storedResBtnMode() {
+      return this.selectedTab === 'stored-resources' ? null : 'flat'
+    },
+    addResBtnMode() {
+      return this.selectedTab === 'add-resource' ? null : 'flat'
+    }
+  }, 
   components: { BaseCard, BaseButton, StoredResources, AddResource },
   methods: {
     setSelectedTab(tab) {
@@ -50,5 +62,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.base-card {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
 </style>
