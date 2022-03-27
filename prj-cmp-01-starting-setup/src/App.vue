@@ -13,7 +13,7 @@ export default {
   },
   components: {
     TheHeader,
-    TheResources
+    TheResources,
   },
 };
 </script>
