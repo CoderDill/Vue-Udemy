@@ -1,35 +1,19 @@
 <template>
   <TheHeader title="Stored Resources" />
-  
+  <TheResources />
 </template>
 
 <script>
-import { ref } from 'vue';
 import TheHeader from './components/layouts/TheHeader.vue';
+import TheResources from './components/learning-resouces/TheResources.vue'
 
 export default {
   name: 'App',
   setup() {
-    const storedResources = ref([
-      {
-        id: 'official-guide',
-        title: 'Official Guide',
-        description: 'The official guide of Vue.js documentation.',
-        link: 'https://vuejs.org',
-      },
-      {
-        id: 'google',
-        title: 'Google',
-        description: 'Learn to google...',
-        link: 'https://google.com',
-      },
-    ]);
-    return { storedResources };
   },
   components: {
-    StoredResources,
     TheHeader,
-  
+    TheResources
   },
 };
 </script>
