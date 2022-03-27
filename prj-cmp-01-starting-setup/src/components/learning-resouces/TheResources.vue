@@ -1,15 +1,17 @@
 <template>
   <base-card class="base-card">
-    <base-button @click="setSelectedTab('stored-resources')"
-        :mode="storedResBtnMode"
+    <base-button
+      @click="setSelectedTab('stored-resources')"
+      :mode="storedResBtnMode"
       >Resources</base-button
     >
-    <base-button @click="setSelectedTab('add-resource')"
-        :mode="addResBtnMode"
+    <base-button @click="setSelectedTab('add-resource')" :mode="addResBtnMode"
       >Add Resource</base-button
     >
   </base-card>
-  <component :is="selectedTab" ></component>
+  <keep-alive>
+    <component :is="selectedTab"></component>
+  </keep-alive>
 </template>
 
 <script>
@@ -21,20 +23,19 @@ import AddResource from './AddResource.vue';
 
 let selectedTab = ref('stored-resources');
 const storedResources = ref([
-      {
-        id: 'official-guide',
-        title: 'Official Guide',
-        description: 'The official guide of Vue.js documentation.',
-        link: 'https://vuejs.org',
-      },
-      {
-        id: 'google',
-        title: 'Google',
-        description: 'Learn to google...',
-        link: 'https://google.com',
-      },
-    ]);
-
+  {
+    id: 'official-guide',
+    title: 'Official Guide',
+    description: 'The official guide of Vue.js documentation.',
+    link: 'https://vuejs.org',
+  },
+  {
+    id: 'google',
+    title: 'Google',
+    description: 'Learn to google...',
+    link: 'https://google.com',
+  },
+]);
 
 export default {
   setup() {
@@ -42,21 +43,32 @@ export default {
   },
   provide() {
     return {
-      resources: storedResources.value
-    }
+      resources: storedResources.value,
+      addResource: this.addResource,
+    };
   },
   computed: {
     storedResBtnMode() {
-      return this.selectedTab === 'stored-resources' ? null : 'flat'
+      return this.selectedTab === 'stored-resources' ? null : 'flat';
     },
     addResBtnMode() {
-      return this.selectedTab === 'add-resource' ? null : 'flat'
-    }
-  }, 
+      return this.selectedTab === 'add-resource' ? null : 'flat';
+    },
+  },
   components: { BaseCard, BaseButton, StoredResources, AddResource },
   methods: {
     setSelectedTab(tab) {
       selectedTab.value = tab;
+    },
+    addResource(title, description, url) {
+      const newResource = {
+        id: new Date().toISOString(),
+        title: title,
+        description: description,
+        link: url,
+      };
+      this.storedResources.unshift(newResource);
+      this.selectedTab = 'stored-resources';
     },
   },
 };
@@ -68,5 +80,4 @@ export default {
   justify-content: center;
   width: 50%;
 }
-
 </style>
