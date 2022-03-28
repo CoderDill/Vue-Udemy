@@ -89,6 +89,9 @@
         <label for="how-other">Other</label>
       </div>
     </div>
+    <div class="form-control">
+      <RatingControl v-model="rating" />
+    </div>
     <div>
       <button>Save Data</button>
     </div>
@@ -97,6 +100,7 @@
 
 <script>
 import { ref } from 'vue';
+import RatingControl from './RatingControl.vue';
 
 export default {
   setup() {
@@ -106,7 +110,7 @@ export default {
     const interest = ref([]);
     const how = ref(null);
     const userValidity = ref('pending');
-
+    const rating = ref(null);
     return {
       username,
       age,
@@ -114,6 +118,7 @@ export default {
       interest,
       how,
       userValidity,
+      rating,
     };
   },
   methods: {
@@ -123,13 +128,17 @@ export default {
         this.age,
         this.referrer,
         this.interest,
-        this.how
+        this.how,
+        this.userValidity,
+        this.rating
       );
       this.username = '';
       this.age = null;
       this.referrer = 'google';
       this.interest = [];
       this.how = null;
+      this.userValidity = 'pending';
+      this.rating = null;
     },
     validateInput() {
       if (this.username === '') {
@@ -139,6 +148,7 @@ export default {
       }
     },
   },
+  components: { RatingControl },
 };
 </script>
 
