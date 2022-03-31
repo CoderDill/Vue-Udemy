@@ -1,3 +1,31 @@
+<script setup>
+import {  reactive } from 'vue';
+import axios from 'axios';
+import SurveyResult from './SurveyResult.vue';
+
+const results = reactive([]);
+
+async function getSurveys() {
+  try {
+    const response = await axios.get(
+      'https://vueprac-72cb5-default-rtdb.firebaseio.com/survey.json'
+    );
+    for (const id in response.data) {
+      console.log(response.data[id]);
+      results.push({
+        id: id,
+        name: response.data[id].name,
+        rating: response.data[id].rating,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  console.log(results.value);
+}
+</script>
+
 <template>
   <section>
     <base-card>
@@ -8,46 +36,16 @@
         >
       </div>
       <ul>
-        <survey-result
+        <SurveyResult
           v-for="result in results"
           :key="result.id"
           :name="result.name"
           :rating="result.rating"
-        ></survey-result>
+        />
       </ul>
     </base-card>
   </section>
 </template>
-
-<script>
-import { ref } from 'vue';
-import axios from 'axios';
-import SurveyResult from './SurveyResult.vue';
-
-const results = ref([]);
-
-export default {
-  // props: ['results'],
-  components: {
-    SurveyResult,
-  },
-  methods: {
-    async getSurveys() {
-      const response = await axios.get(
-        'https://vueprac-72cb5-default-rtdb.firebaseio.com/survey.json'
-      );
-      if (response.ok) {
-        return response.json;
-      }
-      console.log(response.data, results.value);
-      for (const result in response.data) {
-      results.value.push({name: result.name, rating: result.rating})
-      }
-      console.log(results.value)
-    },
-  },
-};
-</script>
 
 <style scoped>
 ul {
