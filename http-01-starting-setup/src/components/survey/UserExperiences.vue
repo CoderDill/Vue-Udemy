@@ -1,9 +1,34 @@
+<template>
+  <section>
+    <base-card>
+      <h2>Submitted Experiences</h2>
+      <div>
+        <base-button @click="getSurveys"
+          >Load Submitted Experiences</base-button
+        >
+      </div>
+      <ul>
+        <SurveyResult
+          v-for="result in results"
+          :key="result.id"
+          :name="result.name"
+          :rating="result.rating"
+        />
+      </ul>
+    </base-card>
+  </section>
+</template>
+
 <script setup>
-import {  reactive } from 'vue';
+import {  reactive, onMounted } from 'vue';
 import axios from 'axios';
 import SurveyResult from './SurveyResult.vue';
 
 const results = reactive([]);
+
+onMounted(() => {
+  getSurveys()
+})
 
 async function getSurveys() {
   try {
@@ -25,27 +50,6 @@ async function getSurveys() {
   console.log(results.value);
 }
 </script>
-
-<template>
-  <section>
-    <base-card>
-      <h2>Submitted Experiences</h2>
-      <div>
-        <base-button @click="getSurveys"
-          >Load Submitted Experiences</base-button
-        >
-      </div>
-      <ul>
-        <SurveyResult
-          v-for="result in results"
-          :key="result.id"
-          :name="result.name"
-          :rating="result.rating"
-        />
-      </ul>
-    </base-card>
-  </section>
-</template>
 
 <style scoped>
 ul {
