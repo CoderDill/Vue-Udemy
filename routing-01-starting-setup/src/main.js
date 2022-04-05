@@ -14,6 +14,7 @@ const router = createRouter({
     {
       name: 'teams',
       path: '/teams',
+      meta: { needsAuth: true },
       components: { default: TeamsList, footer: TeamsFooter },
       children: [
         {
@@ -28,18 +29,27 @@ const router = createRouter({
     { path: '/:notFound(.*)', redirect: '/teams' },
   ],
   scrollBehavior(_, _2, savedPosition) {
-      console.log(savedPosition);
-      if (savedPosition) {
-          return savedPosition
-      }
+    console.log(savedPosition);
+    if (savedPosition) {
+      return savedPosition;
+    }
     return { left: 0, top: 0 };
   },
 });
 
 router.beforeEach(function (to, from, next) {
-    console.log(to, from)
+  console.log(to, from);
+  if (to.meta.needsAuth) {
     next();
-})
+  } else {
+    next();
+  }
+});
+
+router.afterEach(function (to, from, next) {
+  console.log(to, from);
+  next();
+});
 
 const app = createApp(App);
 
