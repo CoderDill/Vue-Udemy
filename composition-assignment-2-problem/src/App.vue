@@ -20,15 +20,25 @@
 </template>
 
 <script setup>
-import {ref, computed, watch} from 'vue'
+import { ref, computed, watch } from 'vue';
 
-const availableFunds = ref(100)
-const currentExpenses = ref(0)
-const enteredExpense = ref(0)
+const availableFunds = ref(100);
+const currentExpenses = ref(0);
+const enteredExpense = ref(0);
 
-computed()
+const remainingFunds = computed(function () {
+  return availableFunds.value - currentExpenses.value;
+});
 
-watch()
+function addExpense() {
+  currentExpenses.value += enteredExpense.value;
+}
+
+watch(remainingFunds, (newFunds) => {
+  if (newFunds < 0) {
+    alert('You are broke!');
+  }
+});
 
 // export default {
 //   data() {
