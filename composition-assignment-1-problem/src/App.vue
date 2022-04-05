@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-  import { reactive} from 'vue'
+  import { reactive, watch, computed} from 'vue'
 
   // const goal = ref('Learn Vue well enough to not get fired 😂')
   // const goalVisible = ref(false)
@@ -25,6 +25,14 @@
   function goalIsVisible() {
     data.goalVisible = !data.goalVisible;
   }
+
+  computed(function () {
+    return 'computed'
+  })
+
+  watch(data, function (newGoal, oldGoal) {
+    console.log(newGoal, oldGoal)
+  })
 </script>
 
 <style>
