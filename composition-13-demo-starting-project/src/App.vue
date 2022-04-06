@@ -20,7 +20,6 @@ function selectUser(uid) {
   return selectedUser.value = activeUsers.value.find((usr) => usr.id === uid )
 }
 
-
 // export default {
 //   components: {
 //     UserList,
