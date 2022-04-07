@@ -14,10 +14,10 @@ import UserList from './components/users/UserList.vue';
 import ProjectsList from './components/projects/ProjectsList.vue';
 
 const selectedUser = ref(null)
-const activeUsers = ref(USER_DATA)
+const activeUsers = USER_DATA
 
 function selectUser(uid) {
-  return selectedUser.value = activeUsers.value.find((usr) => usr.id === uid )
+  return selectedUser.value = activeUsers.find((usr) => usr.id === uid )
 }
 
 // export default {

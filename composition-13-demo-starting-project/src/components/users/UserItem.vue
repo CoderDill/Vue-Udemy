@@ -8,12 +8,12 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
 
-defineProps({id: String, userName: String})
+const props = defineProps({id: String, userName: String})
 
-const emit = defineEmits(['list-projects'])
+const emits = defineEmits(['list-projects'])
 
 function viewProjects() {
-  emit('list-projects')
+  emits('list-projects', props.id)
 }
 
 // export default {

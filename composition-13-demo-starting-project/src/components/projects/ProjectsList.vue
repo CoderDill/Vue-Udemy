@@ -22,7 +22,7 @@
 
 <script setup>
 import ProjectItem from './ProjectItem.vue';
-import { ref, defineProps, computed, watch } from 'vue';
+import { ref, defineProps, computed, watch, toRefs } from 'vue';
 
 const enteredSearchTerm = ref('');
 const activeSearchTerm = ref('');
@@ -46,12 +46,16 @@ function updateSearch(val) {
   return (enteredSearchTerm.value = val);
 }
 
-watch(function (newVal) {
+watch(enteredSearchTerm, function (newVal) {
   setTimeout(() => {
     if (newVal === enteredSearchTerm.value) {
       activeSearchTerm.value = newVal;
     }
   }, 300);
+});
+
+const { user } = toRefs(props);
+watch(user, function () {
   enteredSearchTerm.value = '';
 });
 
@@ -94,7 +98,7 @@ watch(function (newVal) {
 //     },
 //     user() {
 //       this.enteredSearchTerm = '';
-//     },
+//     }
 //   },
 // };
 </script>
