@@ -1,4 +1,5 @@
 <template>
+  <test></test>
   <main>
     <user-list :users="activeUsers" @list-projects="selectUser"></user-list>
     <projects-list :user="selectedUser"></projects-list>
@@ -9,6 +10,7 @@
 import {ref} from 'vue'
 
 import USER_DATA from './dummy-data.js';
+import Test from './components/Test.vue'
 
 import UserList from './components/users/UserList.vue';
 import ProjectsList from './components/projects/ProjectsList.vue';
