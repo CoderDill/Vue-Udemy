@@ -1,10 +1,17 @@
 <template>
   <base-container>
     <h2>Active Users</h2>
-    <base-search @search="updateSearch" :search-term="enteredSearchTerm"></base-search>
+    <base-search
+      @search="updateSearch"
+      :search-term="enteredSearchTerm"
+    ></base-search>
     <div>
-      <button @click="sort('asc')" :class="{selected: sorting === 'asc'}">Sort Ascending</button>
-      <button @click="sort('desc')" :class="{selected: sorting === 'desc'}">Sort Descending</button>
+      <button @click="sort('asc')" :class="{ selected: sorting === 'asc' }">
+        Sort Ascending
+      </button>
+      <button @click="sort('desc')" :class="{ selected: sorting === 'desc' }">
+        Sort Descending
+      </button>
     </div>
     <ul>
       <user-item
@@ -19,9 +26,11 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue';
+import { toRefs } from 'vue';
 
 import UserItem from './UserItem.vue';
+import useSearch from '../../hooks/search';
+import useSort from '../../hooks/sort';
 
 export default {
   components: {
@@ -30,61 +39,50 @@ export default {
   props: ['users'],
   emits: ['list-projects'],
   setup(props) {
-    const enteredSearchTerm = ref('');
-    const activeSearchTerm = ref('');
+    // TOOK THIS CODE AND MADE IT REUSABLE WITH useSearch hook
 
-    const availableUsers = computed(function () {
-      let users = [];
-      if (activeSearchTerm.value) {
-        users = props.users.filter((usr) =>
-          usr.fullName.includes(activeSearchTerm.value)
-        );
-      } else if (props.users) {
-        users = props.users;
-      }
-      return users;
-    });
+    // const enteredSearchTerm = ref('');
+    // const activeSearchTerm = ref('');
 
-    watch(enteredSearchTerm, function (newValue) {
-      setTimeout(() => {
-        if (newValue === enteredSearchTerm.value) {
-          activeSearchTerm.value = newValue;
-        }
-      }, 300);
-    });
+    // const availableUsers = computed(function () {
+    //   let users = [];
+    //   if (activeSearchTerm.value) {
+    //     users = props.users.filter((usr) =>
+    //       usr.fullName.includes(activeSearchTerm.value)
+    //     );
+    //   } else if (props.users) {
+    //     users = props.users;
+    //   }
+    //   return users;
+    // });
 
-    function updateSearch(val) {
-      enteredSearchTerm.value = val;
-    }
+    // watch(enteredSearchTerm, function (newValue) {
+    //   setTimeout(() => {
+    //     if (newValue === enteredSearchTerm.value) {
+    //       activeSearchTerm.value = newValue;
+    //     }
+    //   }, 300);
+    // });
 
-    const sorting = ref(null);
-    const displayedUsers = computed(function () {
-      if (!sorting.value) {
-        return availableUsers.value;
-      }
-      return availableUsers.value.slice().sort((u1, u2) => {
-        if (sorting.value === 'asc' && u1.fullName > u2.fullName) {
-          return 1;
-        } else if (sorting.value === 'asc') {
-          return -1;
-        } else if (sorting.value === 'desc' && u1.fullName > u2.fullName) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
-    });
+    // function updateSearch(val) {
+    //   enteredSearchTerm.value = val;
+    // }
+    const { users } = toRefs(props);
 
-    function sort(mode) {
-      sorting.value = mode;
-    }
+    const { availableItems, enteredSearchTerm, updateSearch } = useSearch(
+      users,
+      'fullName'
+    );
+    
+    const {sorting, sort, displayedUsers} = useSort(availableItems, 'fullName')
+
 
     return {
       enteredSearchTerm,
       updateSearch,
       displayedUsers,
       sorting,
-      sort
+      sort,
     };
   },
   // data() {
