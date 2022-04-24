@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-const useCoachStore = defineStore('coachstore', {
+export const useCoachStore = defineStore('coachstore', {
   state: () => {
     return {
       coaches: [
@@ -22,11 +22,16 @@ const useCoachStore = defineStore('coachstore', {
           'I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.',
         hourlyRate: 30,
       },
-    ];}
-    
+      ]
+    }   
   },
-  getters: {},
+  getters: {
+    coaches(state) {
+      return state.coaches
+    },
+    hasCoaches(state) {
+      return state.coaches && state.coaches.length > 0;
+    }
+  },
   actions: {},
 });
-
-export default useCoachStore;
